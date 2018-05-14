@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>TITLE</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
+
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.min.js"></script>
+
+    <!-- Data table -->
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+    <script src="{{ url_for('static', filename='script.js') }}" rel="script"></script>
+
+    <!--<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+
+    <script type=text/javascript>
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+
+    <!-- Chart for admin (statistic) page -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <link href="{{ url_for('static', filename='chartist.css') }}" rel="stylesheet">
+
+    {% block map %}{% endblock %}
+    {% block calendar %}{% endblock %}
+    </head>
+    <body>
+
+        <nav id="menu" class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">ARRANGEMENT KALENDER</a></li>
+                    <li><a href="/calendar">Kalender</a></li>
+                    <li><a href="/events">Events</a></li>
+                    <li><a href="/map">Kart</a></li>
+                    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdy96XZUgmGP5fR8D2FJt2M2XS9Rcmi-xcWQvXNFLsthDJPzg/viewform">Feedback</a></li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if 'user_id' in session %}
+                        {% if session['role'] == 'Administrator' %}
+                            <li><a href="/auth/statistics">Admin</a></li>
+                            <!--<li><a href="/auth/signup"><span class="glyphicon glyphicon-user"></span> Sign up new user</a></li>-->
+                        {% endif %}
+                        <li><a href="/user/{{ session['user_id'] }}"><span class="glyphicon glyphicon-user"></span></a></li>
+                        <li><a href="/"><span id="user_color">{{ session['email'] }}</span></a></li>
+                        <li><a href="/auth/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    {% else %}
+                        <li><a href="/auth/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li><a href="/auth/signin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </nav>
+
+        <div class="right">
+        </div>
+
+        {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+        {% block content %}
+        {% endblock %}
+
+        <span id="copyright"><p> 2018 &copy; Ahmed Abdi &amp; Silje Cassandra Espedal Stangeland</p></span>
+    </body>
+    </html>
+

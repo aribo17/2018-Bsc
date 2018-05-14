@@ -1,0 +1,16 @@
+.calendar-container{
+    width: 70%;
+    background-color: white;
+}
+
+#calendar{
+    padding: 10px 10px;
+}
+
+.container-table {
+    display: table;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}

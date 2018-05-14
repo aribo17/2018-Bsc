@@ -1,0 +1,27 @@
+{% extends 'frame.html' %}
+
+{% block calendar %}
+    <link rel="stylesheet" href="/static/calendarstyle.css" type="text/css">
+    <script src="{{ url_for('static', filename='calendar.js') }}" rel="script"></script>
+{% endblock %}
+
+{% block content %}
+<div id="user_calendar_div">
+    <div class="container container-table">
+        <div class="row vertical-center-row">
+            <div id='user_calendar'> </div>
+        </div>
+    </div>
+</div>
+
+<!-- how does this work= AJAX because we want to render part of the page with a button -->
+<div id="user_buttons">
+    <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-list"></span></a>
+    <a href="auth/user_map" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span></a>
+    <a href="auth/add_events" class="btn btn-primary">+</a>
+    <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-cog"></span></a>
+</div>
+
+<div id="user_options">
+</div>
+{% endblock %}

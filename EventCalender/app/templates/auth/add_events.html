@@ -1,0 +1,125 @@
+{% extends 'frame.html' %}
+
+{% block content %}
+
+{% macro render_field(field, placeholder=None) %}
+{% if field.errors %}
+<div>
+{% elif field.flags.error %}
+<div>
+{% else %}
+<div>
+{% endif %}
+    {% set css_class = 'form-control ' + kwargs.pop('class', '') %}
+    {{ field(class=css_class, placeholder=placeholder, **kwargs) }}
+</div>
+{% endmacro %}
+
+<div>
+  <div class="container">
+    <legend>Legg til Arrangement</legend>
+    {% with errors = get_flashed_messages(category_filter=["error"]) %}
+    {% if errors %}
+    <div>
+    {% for error in errors %}
+    {{ error }}<br>
+    {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {% if form.errors %}
+    <div>
+    {% for field, error in form.errors.items() %}
+    {% for e in error %}
+    {{ e }}<br>
+    {% endfor %}
+    {% endfor %}
+    </div>
+    {% endif %}
+    <form method="POST" action="{{ url_for('auth.add_events') }}" accept-charset="UTF-8" role="form" enctype="multipart/form-data">
+        <div>
+            {{ form.csrf_token }}
+            {{ form.id }}
+            {{ form.name.label }}
+            <br>
+            {{ render_field(form.name) }}
+            <br>
+            {{ form.event_type.label }} <br>
+            {% for subform in form.event_type %}
+            <tr>
+                <td>{{ subform.label }}</td>
+                <td>{{ subform }}</td>
+            </tr>
+            {% endfor %}
+            <br>
+
+            <br>
+            {{ form.category.label }}
+            <br>
+            {{ render_field(form.category) }}
+            <br>
+            {{ form.description.label }}
+            <br>
+            {{ render_field(form.description) }}
+            <br>
+
+            <div class="col col-sm-6">
+                {{ form.startDate.label }}
+                <br>
+                {{ render_field(form.startDate) }}
+                <br>
+            </div>
+            <div class="col col-sm-6">
+                {{ form.startTime.label }}
+                <br>
+                {{ render_field(form.startTime) }}
+                <br>
+            </div>
+
+            <div class="col col-sm-6">
+                {{ form.endDate.label }}
+                <br>
+                {{ render_field(form.endDate) }}
+                <br>
+            </div>
+            <div class="col col-sm-6">
+                {{ form.endTime.label }}
+                <br>
+                {{ render_field(form.endTime) }}
+                <br>
+            </div>
+
+
+            <br>
+            {{ form.location_name.label }}
+            <br>
+            {{ render_field(form.location_name) }}
+            <br>
+            {{ form.country.label }}
+            <br>
+            {{ render_field(form.country) }}
+            <br>
+            {{ form.city.label }}
+            <br>
+            {{ render_field(form.city) }}
+            <br>
+            {{ form.zip.label }}
+            <br>
+            {{ render_field(form.zip) }}
+            <br>
+            {{ form.street.label }}
+            <br>
+            {{ render_field(form.street) }}
+            <br>
+            {{form.image.label}}
+            <br>
+            {{ form.image }}
+            <br>
+            {{ form.submit }}
+        </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

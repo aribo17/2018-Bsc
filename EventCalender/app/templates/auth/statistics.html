@@ -1,0 +1,132 @@
+{% extends 'frame.html' %}
+
+{% block content %}
+<div class="container">
+    <br><br><br><b></b>
+    <h1>USER</h1>
+    <table id="datatable1" class="hover row-border">
+            <thead>
+                <tr class="header">
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Company</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.company }}</td>
+                <td>{{ user.role }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+    </table>
+
+    <br><br><br><br><br>
+    <h1>EVENT</h1>
+    <table id="datatable2" class="hover row-border">
+            <thead>
+                <tr class="header">
+                    <th></th>
+                    <th>Event id</th>
+                    <th>Location id</th>
+                    <th>Event Owner</th>
+                    <th>Event name</th>
+                    <th>Event Type</th>
+                    <th>Event Category</th>
+                    <th>Event Image</th>
+                    <th>Event Start Date</th>
+                    <th>Event Start Time</th>
+                    <th>Event End Date</th>
+                    <th>Event End Time</th>
+                    <th>Event Deleted</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for event in events %}
+            <tr>
+                <td><img src="../static/images/{{ event.photo }}" alt="{{ event.photo }}" height="100" width="100"></td>
+                <td>{{ event.id }}</td>
+                <td>{{ event.location_id }}</td>
+                <td>{{ event.owner_name }}</td>
+                <td>{{ event.name }}</td>
+                <td>{{ event.type }}</td>
+                <td>{{ event.category }}</td>
+                <td>{{ event.photo }}</td>
+                <td>{{ event.startDate }}</td>
+                <td>{{ event.startTime }}</td>
+                <td>{{ event.endDate }}</td>
+                <td>{{ event.endTime }}</td>
+                <td>{{ event.deleted }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+    </table>
+
+<br><br><br><br><br>
+    <h1>LOCATION</h1>
+    <table id="datatable3" class="hover row-border">
+            <thead>
+                <tr class="header">
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>latitude</th>
+                    <th>longitude</th>
+                    <th>Country</th>
+                    <th>City</th>
+                    <th>Street</th>
+                    <th>Zip</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for location in locations %}
+            <tr>
+                <td>{{ location.id }}</td>
+                <td>{{ location.name }}</td>
+                <td>{{ location.latitude }}</td>
+                <td>{{ location.longitude }}</td>
+                <td>{{ location.country }}</td>
+                <td>{{ location.city }}</td>
+                <td>{{ location.street }}</td>
+                <td>{{ location.zip_code }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+    </table>
+</div>
+
+
+<div id="statistics_doughnut">
+    <canvas id="myChartBest" width="400" height="400"></canvas>
+    <script>
+
+        Chart.defaults.global.responsive = false;
+        var ctx = document.getElementById("myChartBest").getContext('2d');
+        var myChartBest = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: [{% for item in labels_best %}
+                        "{{item}}",
+                        {% endfor %}],
+                datasets: [{
+                    backgroundColor: [
+                        "#2ecc71",
+                        "#3498db",
+                        "#95a5a6",
+                        "#9b59b6",
+                    ],
+                    data: [{% for item in values_best %}
+                            {{item}},
+                          {% endfor %}]
+                }]
+            }
+        });
+    </script>
+</div>
+
+{% endblock %}

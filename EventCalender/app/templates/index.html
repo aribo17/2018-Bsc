@@ -1,0 +1,112 @@
+{% extends 'frame.html' %}
+
+{% block content %}
+
+    <div class="row">
+       <div class="col-md-12">
+          <div class="carousel carousel-showmanymoveone slide" id="carousel-tilenav" data-interval="false">
+             <div class="carousel-inner">
+
+                 {% if carousel_events|count < 8 %}
+                    {% set n = carousel_events|count %}
+                 {% else %}
+                    {% set n = 8 %}
+                 {% endif %}
+
+                 {% for event in carousel_events[:n] %}
+                     {% if loop.first %}
+                        {% set classes = 'item active' %}
+                     {% else %}
+                        {% set classes = 'item' %}
+                     {% endif %}
+                    <div class="{{ classes }}">
+                        <div class="col-xs-12 col-sm-6 col-md-2">
+                            <a href="/event/{{ event.id }}"><img src="static/images/{{ event.photo }}" class="img-responsive"></a>
+                        </div>
+                    </div>
+                {% endfor %}
+             </div>
+              <a class="left carousel-control" href="#carousel-tilenav" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+              <a class="right carousel-control" href="#carousel-tilenav" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+          </div>
+       </div>
+    </div>
+
+    <div class="container">
+
+      <div class="search-bar">
+        <form method="POST" action="{{ url_for('templates.index') }}" accept-charset="UTF-8" role="form">
+          <dl>
+            {{ form.csrf_token }}
+            <div>
+              {{ form.search }}
+              {{ form.submit }}
+            </div>
+          </dl>
+        </form>
+      </div>
+    {% if events != None %}
+      {% for event in events %}
+      <article>
+        <div class="event">
+            <div id="image" class="event_data">
+                <img src="static/images/{{ event[0].photo }}" alt="{{ event[0].photo }}"
+                                height="200" width="200" min-width="100%" alt="{{ event[0].photo }}"/>
+            </div>
+            <div id="event_info" class="event_data">
+                <h3>{{ event[0].name }}</h3>
+                <h6>Starter <span class="lighter_text"> Dato </span>{{ event[0].startDate }}
+                    <span class="lighter_text"> Klokkeslett </span>{{ event[0].startTime }}</h6>
+                <h6>Slutter <span class="lighter_text"> Dato </span>{{ event[0].endDate }}
+                    <span class="lighter_text"> Klokkeslett </span>{{ event[0].endTime }}</h6>
+                <p><span class="lighter_text">Lokasjon </span>{{ event[1].name }}, {{ event[1].street }}</p>
+                <p><span class="lighter_text">Opprettet av </span>{{ event[0].owner_name }}</p>
+                <p><span class="lighter_text">Kategori </span>{{ event[0].category }}</p>
+            </div>
+            <div id="desc" class="event_data">
+                <p>{{ event[0].description }}</p>
+            </div>
+        </div>
+      </article>
+      {% endfor %}
+    {% endif %}
+      <hr>
+    </div>
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron" style="background-color:#F2F2F2;">
+    <div class="container">
+      <h1 class="display-3">Opprett et event i dag!</h1>
+      <p>
+        Hvor og når befinner du deg i morgen? Utforsk arrangementer i flere kategorier eller planlegg en begivenhet selv.
+        Bidra til å fylle din egen og andre brukere sin kalender med fantastiske muligheter.</p>
+      <p>
+        <a class="btn btn-primary btn-lg" href="auth/add_events" role="button">Opprett Event &raquo;</a>
+      </p>
+    </div>
+  </div>
+
+    <script>
+    function carousel() {
+      $('.carousel-showmanymoveone .item').each(function(){
+        var itemToClone = $(this);
+
+        for (var i=1;i<6;i++) {
+          itemToClone = itemToClone.next();
+
+          // wrap around if at end of item collection
+          if (!itemToClone.length) {
+            itemToClone = $(this).siblings(':first');
+          }
+
+          // grab item, clone, add marker class, add to collection
+          itemToClone.children(':first-child').clone()
+            .addClass("cloneditem-"+(i))
+            .appendTo($(this));
+        }
+      });
+    }());
+    </script>
+    <!-- /container -->
+
+{% endblock %}

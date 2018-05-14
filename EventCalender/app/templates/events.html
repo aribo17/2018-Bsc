@@ -1,0 +1,36 @@
+{% extends 'frame.html' %}
+
+{% block content %}
+<div id="add_event">
+    <p>Legg til ny Event</p>
+    <a href="auth/add_events" class="btn btn-primary">+</a>
+</div>
+<div>
+  {% for event in events %}
+    <a href="/event/{{ event[0].id }}">
+      <article>
+        <div class="event">
+            <div id="image" class="event_data">
+                <img src="static/images/{{ event[0].photo }}" alt="{{ event[0].photo }}"
+                                height="200" width="200" min-width="100%" alt="{{ event[0].photo }}"/>
+            </div>
+            <div id="event_info" class="event_data">
+                <h3>{{ event[0].name }}</h3>
+                <h6>Starter <span class="lighter_text"> Dato </span>{{ event[0].startDate }}
+                    <span class="lighter_text"> Klokkeslett </span>{{ event[0].startTime }}</h6>
+                <h6>Slutter <span class="lighter_text"> Dato </span>{{ event[0].endDate }}
+                    <span class="lighter_text"> Klokkeslett </span>{{ event[0].endTime }}</h6>
+                <p><span class="lighter_text">Lokasjon </span>{{ event[1].name }}, {{ event[1].street }}</p>
+                <p><span class="lighter_text">Opprettet av </span>{{ event[0].owner_name }}</p>
+                <p><span class="lighter_text">Kategori </span>{{ event[0].category }}</p>
+            </div>
+            <div id="desc" class="event_data">
+                <p>{{ event[0].description }}</p>
+            </div>
+        </div>
+      </article>
+    </a>
+  {% endfor %}
+
+</div>
+{% endblock %}

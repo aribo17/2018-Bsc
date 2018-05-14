@@ -1,0 +1,14 @@
+{% extends 'frame.html' %}
+
+{% block calendar %}
+    <link rel="stylesheet" href="/static/calendarstyle.css" type="text/css">
+    <script src="{{ url_for('static', filename='calendar.js') }}" rel="script"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container container-table">
+        <div class="row vertical-center-row">
+            <div id='calendar'> </div>
+        </div>
+    </div>
+{% endblock %}

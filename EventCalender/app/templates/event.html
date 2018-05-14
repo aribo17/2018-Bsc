@@ -1,0 +1,30 @@
+{% extends 'frame.html' %}
+
+{% block content %}
+
+  <article>
+    <div class="event">
+        <div id="image" class="event_data">
+            <img src="/static/images/{{ event.photo }}" alt="{{ event.photo }}"
+                            height="200" width="200" min-width="100%" alt="{{ event.photo }}"/>
+        </div>
+        <div id="event_info" class="event_data">
+            <h3>{{ event.name }}</h3>
+            <h6>Starter <span class="lighter_text"> Dato </span>{{ event.startDate }}
+                <span class="lighter_text"> Klokkeslett </span>{{ event.startTime }}</h6>
+            <h6>Slutter <span class="lighter_text"> Dato </span>{{ event.endDate }}
+                <span class="lighter_text"> Klokkeslett </span>{{ event.endTime }}</h6>
+            <p><span class="lighter_text">Lokasjon </span>{{ event.name }}, {{ event.street }}</p>
+            <p><span class="lighter_text">Opprettet av </span>{{ event.owner_name }}</p>
+            <p><span class="lighter_text">Kategori </span>{{ event.category }}</p>
+        </div>
+        <div id="desc" class="event_data">
+            <p>{{ event.description }}</p>
+        </div>
+      <form method="POST", action="{{ url_for('auth.remove_event', e_id=event.id) }}">
+          <button type="submit" class="btn btn-danger"> DELETE </button>
+      </form>
+    </div>
+  </article>
+
+{% endblock %}
